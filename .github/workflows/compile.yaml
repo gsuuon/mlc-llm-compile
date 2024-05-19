@@ -1,0 +1,37 @@
+name: Build and tag mlc-llm
+
+on:
+  workflow_dispatch:
+    inputs:
+      weights_url:
+        type: string
+        description: URL of converted MLC weights repo
+        required: true
+      output_name:
+        type: string
+        description: Name of output artifact
+        required: true
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Compile wasm library
+      run: docker run -e WEIGHTS_REPO_URL=${{ github.event.inputs.weights_url }} -v ${{ github.workspace }}/out:/out gsuuon/mlc-llm-wasm:latest
+
+    - name: Upload wasm artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ github.event.inputs.output_name }}
+        path: out/out.wasm
