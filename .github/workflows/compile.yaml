@@ -1,4 +1,4 @@
-name: Build and tag mlc-llm
+name: Compile model lib
 
 on:
   workflow_dispatch:

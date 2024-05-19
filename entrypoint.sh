@@ -7,5 +7,5 @@ fi
 
 source /root/.bashrc;
 
-git clone $WEIGHTS_REPO_URL -o ./weights;
+git clone $WEIGHTS_REPO_URL ./weights;
 mlc_llm compile ./weights/mlc-chat-config.json --device webgpu -o out/out.wasm;
