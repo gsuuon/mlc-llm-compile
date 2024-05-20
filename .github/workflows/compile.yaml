@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Compile wasm library
-      run: docker run -e WEIGHTS_REPO_URL=${{ github.event.inputs.weights_url }} -v ${{ github.workspace }}/out:/out ghcr.io/gsuuon/mlc-llm-wasm
+      run: docker run -e WEIGHTS_REPO_URL=${{ github.event.inputs.weights_url }} -v ${{ github.workspace }}/out:/out ghcr.io/gsuuon/mlc-llm-wasm:main
 
     - name: Upload wasm artifact
       uses: actions/upload-artifact@v2
