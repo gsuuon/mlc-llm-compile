@@ -31,7 +31,9 @@ jobs:
       run: docker run -e WEIGHTS_REPO_URL=${{ github.event.inputs.weights_url }} -v ${{ github.workspace }}/out:/out ghcr.io/gsuuon/mlc-llm-wasm:main
 
     - name: Rename output lib
-      run: mv out/out.wasm out/${{ github.event.inputs.output_name }}.wasm
+      run: |
+        sudo chown -R $USER:$USER out
+        mv out/out.wasm out/${{ github.event.inputs.output_name }}.wasm
 
     - uses: ncipollo/release-action@v1
       with:
