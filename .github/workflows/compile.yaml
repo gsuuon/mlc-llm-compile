@@ -39,3 +39,4 @@ jobs:
       with:
         artifacts: out/${{ github.event.inputs.output_name }}.wasm
         tag: ${{ github.event.inputs.output_name }}
+        body: ${{ github.event.inputs.weights_url}}
